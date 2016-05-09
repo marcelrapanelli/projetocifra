@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Lyric AutoScroller</title>
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<meta charset="UTF-8">
+		
+	</head>
+	<body>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('.def').hide();
+				$('.end_title').hide();
+				
+				function linhasTexto(){
+					var linhas = $('.lyric').val().split('\n');
+					var qtdLinha = 0;
+					while (qtdLinha<linhas.length){
+						qtdLinha++;
+					}
+					return qtdLinha;
+				}
+				
+				$('.iniciar').click(function(){
+					var somador = $(window).height();
+					var lim_tela = $(document).height() / 2;
+					clearInterval(intervalo);
+					
+					var seconds = 0;
+					seconds = document.getElementById('tmp').value;
+					seconds = seconds * 100;
+					
+					var intervalo = false;
+					intervalo = setInterval(AutoScroll, seconds);
+					
+					function AutoScroll(){
+						window.scrollBy(0,2);
+						somador=somador+2;
+						
+						if(somador > lim_tela){
+							$('.end_title').fadeIn(1000);
+						}
+						if(somador >= $(document).height()){
+							clearInterval(intervalo);
+						}
+					}
+					
+					$('.parar').click(function (){
+						clearInterval(intervalo);
+					});
+				});
+				
+				var atualizaIntervalo = false;
+				atualizaIntervalo = setInterval(atualiza_tela, 500);
+				function atualiza_tela(){
+					var telinha = document.getElementById('tam').value;
+					var letramanho = document.getElementById('siz').value;
+					
+					if(telinha>=500)		//se for maior que 500 ele atuliza, senão não.
+						$('.lyric').css( "height" , telinha);
+					
+					if(letramanho>=12){
+						letramanho=letramanho+"px";
+						$('.lyric').css( "font-size" , letramanho);
+					}
+				};
+				
+				$('.hiw').click(function (){
+					$('.def').slideToggle();
+				});
+				
+				$('.setUpper').click(function() {
+					var letratexto = document.getElementById('lyricID').value.toUpperCase();;
+					document.getElementById('lyricID').value = letratexto;
+				});
+
+			});
+			//Desenvolvido por Marcel Rapanelli.
+		</script>
+		
+		<div class = "menu">
+			<div class= "title">MENU</div>
+			
+			<div class= "setting_tab">
+			
+				<table class="tb_menu">
+					<tr>
+						<td class="lbl">HEIGHT: </td>
+						<td><input type="number" id="tam" class="inp" placeholder="500 ABOVE"/></td>
+					</tr>
+					<tr>
+						<td class="lbl">FONT SIZE: </td>
+						<td><input type="number" id="siz" class="inp" placeholder="IN PIXELS"/></td>
+					</tr>
+				</table>
+				
+				<div class="btn setUpper">TO UPPER CASE</div>
+			</div>
+			
+			<div class = "botoes">
+			
+				<table class="tb_speed">
+					<tr>
+						<td class="lbl">SPEED: </td>
+						<td><input type="number" id="tmp" class="inp" placeholder="1 to 20"/></td>
+					</tr>
+				</table>
+				
+				<div class="btn iniciar">START SCROLLING</div>
+				<div class="btn parar">STOP SCROLLING</div>
+
+			</div>
+			
+			<div class="howto">
+				<div class="hiw"><b>HOW IT WORKS</b></div>
+				
+				<div class="def">
+				
+					<p class="def_p">
+					<b>First Step</b>: Copy and paste the lyrics or whatever you want in our TextBox.
+					</p>
+					
+					<p class="def_p">
+					<b>Second</b>: Set the settings of the Text Height and Font-Size(for better reading).
+					</p>
+					
+					<p class="def_p">
+					<b>Third</b>: Set the Speed for our scrolling(Usually 1 to 10). Click at START SCROLLING, 
+					if the screen is scrolling too fast or too slow, STOP SCROLLING, 
+					change the speed value and START SCROLLING again!
+					</p>
+					
+					<p class="def_p">
+					<b>Fourth Step</b>: Enjoy. So you can play/sing songs, without worrying about taking hands off instrument
+					to scroll!
+					
+					</p>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<div class = "conteudo">
+		
+			<div class="atv">
+			
+				<div class="title lyc"><b>YOUR LYRIC GOES HERE</b></div>
+				<textarea class = "lyric" id="lyricID" placeholder="> Text/Lyric goes HERE <"></textarea>
+				
+			</div>
+			
+			<div class="end">
+			
+				<h1 class="end_title">IF OUR WORK WERE USEFUL, SHARE IT. THAT'S ALL FOLKS <3</h1>
+				
+				<div class="icn twitter">
+					<a href="http://twitter.com/__MarcelR" target="_Blank"><img class="icone" src="src/twt.png"/></a>
+				</div>
+				
+				<div class="icn instagram">
+					<a href="http://instagram.com/marcelrapanelli" target="_Blank"><img class="icone" src="src/inst.png"/></a>
+				</div>
+				
+				<div class="rodape">PRODUZIDO POR SPACECODERS @__MarcelR EM FEV/2015 - Lyric AutoScroller v2.5</div>
+				
+			</div>
+			
+		</div>
+		
+	</body>
+</html>
